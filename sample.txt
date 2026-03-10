@@ -1,0 +1,412 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  ChevronLeft, 
+  ChevronRight,
+  ExternalLink,
+  MapPin,
+  Calendar,
+  Layers,
+  Camera,
+  BookOpen
+} from 'lucide-react';
+
+/* --- CONFIGURATION: Images ---
+   The paths are set to your local project structure.
+*/
+const ASSETS = {
+  profile: "/about.jpg",
+  tum: "/tum_logo.jpg",
+  huawei: "/huawei_logo.png",
+  project1: "",
+  project2: "",
+  project3: "",
+
+  photo1: "/photos/aviation.jpg",      
+  photo2: "/photos/snow-hiking.jpg",   
+  photo3: "/photos/night-bridge.jpg",  
+  photo4: "/photos/munich.jpg",        
+  photo5: "/photos/wooden-bridge.jpg", 
+  photo6: "/photos/town-arch.jpg",     
+  photo7: "",                  
+  photo8: ""                   
+};
+
+/* --- COMPONENT: SocialBar --- */
+const SocialBar = () => (
+  <div className="fixed top-1/2 right-5 -translate-y-1/2 flex flex-col gap-4 z-50">
+    <a href="https://github.com" target="_blank" rel="noreferrer" className="text-slate-800 hover:text-slate-500 transition-opacity opacity-70 hover:opacity-100">
+      <Github strokeWidth={1.5} size={24} />
+    </a>
+    <a href="https://www.linkedin.com/in/gordon-tan04/" target="_blank" rel="noreferrer" className="text-slate-800 hover:text-slate-500 transition-opacity opacity-70 hover:opacity-100">
+      <Linkedin strokeWidth={1.5} size={24} />
+    </a>
+    <a href="mailto:gordon.tan111@gmail.com" className="text-slate-800 hover:text-slate-500 transition-opacity opacity-70 hover:opacity-100">
+      <Mail strokeWidth={1.5} size={24} />
+    </a>
+  </div>
+);
+
+/* --- COMPONENT: Experience Card --- */
+const ExperienceCard = ({ logo, image, title, role, onClick }) => (
+  <div 
+    onClick={onClick}
+    className="group relative flex items-center justify-center bg-white rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer overflow-hidden border border-slate-200 h-36 w-full md:w-[48%]"
+  >
+    <div className="absolute inset-0 flex items-center justify-center p-8 transition-all duration-500 group-hover:opacity-0 group-hover:scale-95">
+      {image ? (
+        <img src={image} alt={title} className="max-h-full max-w-full object-contain mix-blend-multiply filter grayscale opacity-70 transition-opacity duration-300" />
+      ) : (
+        <div className="text-slate-400">
+          {logo || <Layers size={48} />}
+        </div>
+      )}
+    </div>
+
+    <div className="absolute inset-0 bg-slate-900 flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-105 group-hover:scale-100">
+      <h3 className="font-bold text-xl text-white mb-1 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">{title}</h3>
+      <p className="text-sm font-medium text-slate-400 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{role}</p>
+      
+      <div className="mt-4 flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-indigo-400 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-150">
+        View Details <ChevronLeft className="rotate-180" size={14} />
+      </div>
+    </div>
+  </div>
+);
+
+/* --- COMPONENT: Project Row --- */
+const ProjectRow = ({ title, description, image, github, arxiv }) => (
+  <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+    <div className="w-full md:w-1/2 space-y-6">
+      <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">{title}</h3>
+      <p className="text-slate-600 text-lg leading-relaxed">{description}</p>
+      
+      <div className="flex flex-wrap gap-4 pt-4">
+        {github && (
+          <a href={github} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors font-medium text-sm shadow-sm hover:shadow-md">
+            <Github size={18} /> GitHub
+          </a>
+        )}
+        {arxiv && (
+          <a href={arxiv} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-full hover:bg-slate-50 transition-colors font-medium text-sm shadow-sm hover:shadow-md">
+            <ExternalLink size={18} /> arXiv Paper
+          </a>
+        )}
+        {(!github && !arxiv) && (
+          <span className="inline-flex items-center gap-2 px-6 py-3 bg-slate-100 text-slate-400 rounded-full font-medium text-sm cursor-not-allowed">
+            Coming Soon
+          </span>
+        )}
+      </div>
+    </div>
+
+    <div className="w-full md:w-1/2 aspect-video md:aspect-[4/3] rounded-[2rem] overflow-hidden bg-slate-100 shadow-xl border border-slate-200 flex items-center justify-center group relative">
+      {image ? (
+        <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+      ) : (
+        <div className="text-slate-400 font-medium flex flex-col items-center gap-2">
+          <span className="text-sm tracking-widest uppercase">Media Placeholder</span>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+/* --- COMPONENT: Photo Card --- */
+const PhotoCard = ({ photo }) => {
+  const isVideo = photo.image && photo.image.match(/\.(mp4|webm|ogg)$/i);
+  const videoRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (isVideo && videoRef.current) {
+      videoRef.current.play().catch(e => console.log("Video auto-play prevented:", e));
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (isVideo && videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  return (
+    <div 
+      className="relative h-[300px] md:h-[400px] w-auto bg-slate-100 rounded-xl overflow-hidden cursor-pointer shadow-sm transition-all duration-300 group"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {photo.image ? (
+        isVideo ? (
+          <video 
+            ref={videoRef}
+            src={photo.image} 
+            loop 
+            muted 
+            playsInline 
+            className="h-full w-auto object-contain bg-slate-100" 
+          />
+        ) : (
+          <img 
+            src={photo.image} 
+            alt={photo.title} 
+            className="h-full w-auto object-contain bg-slate-100" 
+          />
+        )
+      ) : (
+        <div className="h-full w-64 flex items-center justify-center bg-slate-800">
+          <span className="text-slate-500 font-medium text-[10px] tracking-widest uppercase text-center px-2">
+            Waiting for Photo
+          </span>
+        </div>
+      )}
+      
+      {/* Photo Location Overlay (Discrete Bar on Hover) */}
+      <div className="absolute bottom-0 left-0 right-0 p-3 bg-slate-900/70 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 flex justify-end">
+        <span className="text-white/90 text-sm font-normal drop-shadow-sm transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+          {photo.location}{photo.year ? `, ${photo.year}` : ''}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* --- COMPONENT: Photo Gallery --- */
+const PhotoGallery = () => {
+  // SETTINGS: Speed of movement (Higher = Slower)
+  const duration = 60; // seconds
+
+  const photos = [
+    { title: "Aviation", location: "Pitt Meadows, Canada", year: "2024", image: ASSETS.photo1 },
+    { title: "Alpine Skiing", location: "Vancouver, Canada", year: "2025", image: ASSETS.photo2 },
+    { title: "Night Walks", location: "Markham, Canada", year: "2026", image: ASSETS.photo3 },
+    { title: "Munich", location: "Munich, Germany", year: "2024", image: ASSETS.photo4 },
+    { title: "Exploring", location: "Victoria, Canada", year: "2018", image: ASSETS.photo5 },
+    { title: "Travel", location: "Český Krumlov, Czech Republic", year: "2024", image: ASSETS.photo6 },
+    { title: "Classical Piano", location: "Home", year: "2024", image: ASSETS.photo7 },
+    { title: "Cycling", location: "The Alps", year: "2023", image: ASSETS.photo8 },
+  ];
+
+  // Double the photos for seamless infinite marquee loop
+  const marqueePhotos = [...photos, ...photos];
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      <style>
+        {`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .animate-marquee {
+            animation: marquee ${duration}s linear infinite;
+          }
+          .animate-marquee:hover {
+            animation-play-state: paused;
+          }
+        `}
+      </style>
+
+      {/* Minimal Fade Gradients for Edges (w-4 for very subtle blur) */}
+      <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+      <div className="flex animate-marquee gap-6 w-max py-4">
+        {marqueePhotos.map((photo, index) => (
+          <div key={index} className="flex-shrink-0">
+            <PhotoCard photo={photo} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* --- COMPONENT: Page - Home --- */
+const HomePage = ({ navigate }) => {
+  return (
+    <>
+      {/* ABOUT SECTION (Compact Spacing) */}
+      <section id="about" className="max-w-6xl mx-auto px-6 pt-16 pb-6 flex flex-wrap md:flex-nowrap items-center gap-12 bg-white">
+        <div className="w-full md:w-1/2 space-y-6">
+          <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight">Hello, I'm Gordon!</h1>
+          <p className="text-slate-600 leading-relaxed text-lg">
+            I'm a passionate developer focusing on bridging the gap between engineering and design. 
+            Currently studying at TUM, I have experience working with massive scale systems at Huawei 
+            and building interactive 3D experiences on the web.
+          </p>
+          
+          {/* Contact Details & Social Links */}
+          <div className="flex flex-col gap-3 pt-2">
+            <a href="mailto:gordon.tan111@gmail.com" className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors">
+              <Mail size={20} strokeWidth={1.5} />
+              <span className="text-lg">gordon.tan111@gmail.com</span>
+            </a>
+            <div className="flex flex-wrap gap-6 items-center">
+              <a href="https://github.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors">
+                <Github size={20} strokeWidth={1.5} />
+                <span className="font-medium">GitHub</span>
+              </a>
+              <a href="https://www.linkedin.com/in/gordon-tan04/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors">
+                <Linkedin size={20} strokeWidth={1.5} />
+                <span className="font-medium">LinkedIn</span>
+              </a>
+              <a href="#" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors">
+                <BookOpen size={20} strokeWidth={1.5} />
+                <span className="font-medium">Blog</span>
+              </a>
+            </div>
+          </div>
+
+          <ul className="space-y-3 text-slate-600 pt-4">
+            {['Full Stack Development', '3D Web Graphics (Three.js)', 'System Architecture'].map(skill => (
+              <li key={skill} className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-indigo-500 rounded-full"></span>
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="w-full md:w-1/2 flex justify-center">
+          <div className="w-full max-w-md aspect-[3/4] bg-slate-100 rounded-2xl border border-slate-200 flex items-center justify-center relative overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+             <img src={ASSETS.profile} alt="Gordon Tan" className="w-full h-full object-cover" />
+          </div>
+        </div>
+      </section>
+
+      {/* EXPERIENCES GALLERY (Compact Spacing) */}
+      <section className="max-w-6xl mx-auto px-6 pt-4 pb-12">
+        <h2 className="text-4xl font-bold text-slate-800 mb-8">Experience</h2>
+        <div className="flex flex-wrap gap-6 justify-center md:justify-start">
+          <ExperienceCard 
+            title="Huawei Noah's Ark Lab" 
+            role="Assistant Researcher Intern" 
+            onClick={() => navigate('huawei')}
+            image={ASSETS.huawei}
+          />
+          <ExperienceCard 
+            title="Technical University of Munich" 
+            role="Undergraduate Researcher" 
+            onClick={() => navigate('tum')}
+            image={ASSETS.tum}
+          />
+        </div>
+      </section>
+
+      {/* THINGS I'VE DONE SECTION */}
+      <section className="max-w-6xl mx-auto px-6 pb-32 border-t border-slate-100 pt-16">
+        <h2 className="text-4xl font-bold text-slate-800 mb-20">Things I've Done</h2>
+        <div className="flex flex-col gap-24">
+          <ProjectRow 
+            title="VideoRigAnything"
+            description="Rigged 4D mesh reconstruction from video. This project introduces a novel framework for automatically extracting animatable 3D meshes directly from monocular video footage, bridging the gap between static 3D capture and dynamic animation."
+            image={ASSETS.project1}
+            github="#"
+          />
+          <ProjectRow 
+            title="UniScale"
+            description="A unified, scale-aware multi-view 3D reconstruction framework for robotic applications. It uses a single feed-forward network to jointly estimate camera parameters, depth maps, and metric scale while flexibly integrating geometric priors without training from scratch."
+            image={ASSETS.project2}
+            arxiv="#"
+          />
+          <ProjectRow 
+            title="Deep Learning Classifier"
+            description="Custom CNN classifying images with 98% accuracy. Trained on a diverse dataset to identify granular object categories, heavily optimized for edge deployment."
+            image={ASSETS.project3}
+          />
+        </div>
+      </section>
+
+      {/* PHOTOS SECTION */}
+      <section className="max-w-6xl mx-auto px-6 pb-32 border-t border-slate-100 pt-16">
+        <h2 className="text-3xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+          <Camera className="text-slate-500" size={32} />
+          Photos
+        </h2>
+        <PhotoGallery />
+      </section>
+    </>
+  );
+};
+
+/* --- COMPONENT: Page - Detail --- */
+const ExperienceDetail = ({ title, role, date, location, description, tags, navigate }) => (
+  <div className="min-h-screen bg-white animate-in slide-in-from-right duration-500">
+    <div className="bg-slate-900 text-white py-20 px-6 relative overflow-hidden">
+      <button 
+        onClick={() => navigate('home')}
+        className="absolute top-8 left-8 flex items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer"
+      >
+        <ChevronLeft size={20} /> Back to Home
+      </button>
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <h1 className="text-5xl font-bold mb-4">{title}</h1>
+        <div className="flex flex-wrap gap-6 text-slate-300 text-sm font-medium uppercase tracking-wide">
+          <span className="flex items-center gap-2"><MapPin size={16} /> {location}</span>
+          <span className="flex items-center gap-2"><Calendar size={16} /> {date}</span>
+        </div>
+      </div>
+    </div>
+
+    <div className="max-w-3xl mx-auto px-6 py-16 space-y-8">
+      <div className="prose prose-lg text-slate-600 leading-relaxed">
+        <h3 className="text-2xl font-bold text-slate-900 mb-4">Role Overview</h3>
+        <p>{description}</p>
+        
+        <h3 className="text-2xl font-bold text-slate-900 mb-4 mt-8">Key Technologies</h3>
+        <div className="flex flex-wrap gap-2">
+          {tags.map(tag => (
+            <span key={tag} className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+/* --- MAIN APP COMPONENT --- */
+export default function App() {
+  const [activePage, setActivePage] = useState('home');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activePage]);
+
+  return (
+    <div className="font-sans text-slate-900 bg-white">
+      {activePage === 'home' && <SocialBar />}
+
+      {activePage === 'home' && (
+        <HomePage navigate={setActivePage} />
+      )}
+
+      {activePage === 'huawei' && (
+        <ExperienceDetail 
+          title="Huawei Noah's Ark Lab"
+          role="Assistant Researcher Intern"
+          date="Oct 2023 - Present"
+          location="Munich, Germany"
+          description="Worked on large-scale distributed systems, focusing on optimizing data throughput and reducing latency for cloud infrastructure services."
+          tags={['C++', 'Distributed Systems', 'Cloud Computing']}
+          navigate={setActivePage}
+        />
+      )}
+
+      {activePage === 'tum' && (
+        <ExperienceDetail 
+          title="Technical University of Munich"
+          role="Undergraduate Researcher"
+          date="Apr 2022 - Sep 2023"
+          location="Munich, Germany"
+          description="Conducted research in the field of Computer Vision and Deep Learning, contributing to papers published in top-tier conferences."
+          tags={['Python', 'PyTorch', 'Computer Vision', 'Academic Writing']}
+          navigate={setActivePage}
+        />
+      )}
+    </div>
+  );
+}
