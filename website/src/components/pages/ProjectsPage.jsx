@@ -46,12 +46,12 @@ function ProjectBlock({ project, index }) {
       {/* Text */}
       <div className="w-full md:w-1/2 space-y-5">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-indigo-500">
+          <span className="text-xs font-bold uppercase tracking-widest text-navy-500">
             Project {String(index + 1).padStart(2, '0')}
           </span>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+        <h2 className="text-3xl md:text-4xl font-black text-navy-500 tracking-tight leading-tight">
           {project.title}
         </h2>
 
@@ -153,7 +153,7 @@ export default function ProjectsPage({ navigate }) {
         </button>
 
         <div className="max-w-4xl mx-auto relative z-10">
-          <p className="text-indigo-400 text-sm font-semibold uppercase tracking-widest mb-3">
+          <p className="text-navy-400 text-sm font-semibold uppercase tracking-widest mb-3">
             Portfolio
           </p>
           <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-tight">
@@ -177,7 +177,7 @@ export default function ProjectsPage({ navigate }) {
       <div className="max-w-5xl mx-auto px-6 pb-20">
         <button
           onClick={() => navigate('home')}
-          className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold transition-colors group"
+          className="inline-flex items-center gap-2 text-navy-600 hover:text-navy-700 font-semibold transition-colors group"
         >
           <ChevronLeft
             size={18}

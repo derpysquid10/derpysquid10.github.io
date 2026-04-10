@@ -8,14 +8,14 @@ export default function SocialBar() {
         target="_blank"
         rel="noreferrer"
         aria-label="LinkedIn"
-        className="text-slate-700 opacity-60 hover:opacity-100 hover:text-indigo-600 transition-all duration-200"
+        className="text-slate-700 opacity-60 hover:opacity-100 hover:text-navy-600 transition-all duration-200"
       >
         <Linkedin strokeWidth={1.5} size={22} />
       </a>
       <a
         href="mailto:gordon.tan111@gmail.com"
         aria-label="Email"
-        className="text-slate-700 opacity-60 hover:opacity-100 hover:text-indigo-600 transition-all duration-200"
+        className="text-slate-700 opacity-60 hover:opacity-100 hover:text-navy-600 transition-all duration-200"
       >
         <Mail strokeWidth={1.5} size={22} />
       </a>

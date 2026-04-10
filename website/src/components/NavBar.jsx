@@ -20,9 +20,9 @@ export default function NavBar({ activePage, navigate }) {
   }
 
   const linkBase =
-    'text-sm font-medium text-slate-600 hover:text-indigo-600 transition-colors duration-200 cursor-pointer'
+    'text-sm font-normal font-sans text-slate-600 hover:text-navy-600 transition-colors duration-200 cursor-pointer'
   const activeLink =
-    'text-sm font-medium text-indigo-600 cursor-pointer'
+    'text-sm font-medium font-sans text-navy-600 cursor-pointer'
 
   const isExperiencePage = activePage === 'huawei' || activePage === 'tum'
 
@@ -32,7 +32,7 @@ export default function NavBar({ activePage, navigate }) {
         {/* Brand */}
         <button
           onClick={handleHomeClick}
-          className="text-xl font-black tracking-tight leading-tight text-slate-900 hover:text-indigo-600 transition-colors duration-200"
+          className="text-xl font-semibold font-serif tracking-tight leading-tight text-navy-600 hover:text-navy-500 transition-colors duration-200"
         >
           Gordon Tan
         </button>

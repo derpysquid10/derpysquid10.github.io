@@ -9,7 +9,7 @@ export default function ProjectRow({ title, description, image, github, arxiv, r
     >
       {/* Text block */}
       <div className="w-full md:w-1/2 space-y-6">
-        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+        <h3 className="text-3xl md:text-4xl font-bold text-navy-500 tracking-tight">
           {title}
         </h3>
         <p className="text-slate-600 text-lg leading-relaxed">{description}</p>
