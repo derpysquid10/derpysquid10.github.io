@@ -4,6 +4,7 @@ import SocialBar from './components/SocialBar'
 import HomePage from './components/pages/HomePage'
 import ExperienceDetail from './components/pages/ExperienceDetail'
 import ProjectsPage from './components/pages/ProjectsPage'
+import BlogPage from './components/pages/BlogPage'
 
 const HUAWEI_DATA = {
   title: "Huawei Noah's Ark Lab",
@@ -13,7 +14,7 @@ const HUAWEI_DATA = {
   description:
     'Worked on large-scale distributed systems, focusing on optimizing data throughput and reducing latency for cloud infrastructure services.',
   tags: ['C++', 'Distributed Systems', 'Cloud Computing'],
-  logo: '/huawei_logo.png',
+  logo: '/huawei.png',
   accentColor: 'from-red-900 to-slate-900',
   highlights: [
     'Designed and implemented high-throughput data pipeline components handling millions of events per second.',
@@ -31,7 +32,7 @@ const TUM_DATA = {
   description:
     'Conducted research in the field of Computer Vision and Deep Learning, contributing to papers published in top-tier conferences.',
   tags: ['Python', 'PyTorch', 'Computer Vision', 'Academic Writing'],
-  logo: '/tum_logo.jpg',
+  logo: '/tum_logo.png',
   accentColor: 'from-blue-900 to-slate-900',
   highlights: [
     'Co-authored a paper accepted at a top-tier computer vision conference.',
@@ -68,6 +69,8 @@ export default function App() {
         )}
 
         {activePage === 'projects' && <ProjectsPage navigate={navigate} />}
+
+        {activePage === 'blog' && <BlogPage />}
       </main>
     </div>
   )

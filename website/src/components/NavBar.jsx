@@ -32,9 +32,9 @@ export default function NavBar({ activePage, navigate }) {
         {/* Brand */}
         <button
           onClick={handleHomeClick}
-          className="text-xl font-black tracking-tight text-slate-900 hover:text-indigo-600 transition-colors duration-200"
+          className="text-xl font-black tracking-tight leading-tight text-slate-900 hover:text-indigo-600 transition-colors duration-200"
         >
-          Gordon
+          Gordon Tan
         </button>
 
         {/* Nav links */}
@@ -53,12 +53,14 @@ export default function NavBar({ activePage, navigate }) {
             Experience
           </button>
 
+          {/* Projects tab commented out for now
           <button
             onClick={() => navigate('projects')}
             className={activePage === 'projects' ? activeLink : linkBase}
           >
             Projects
           </button>
+          */}
 
           <button
             onClick={() => scrollToSection('photos')}

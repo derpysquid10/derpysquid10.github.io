@@ -2,37 +2,55 @@ import { useState } from 'react'
 import PhotoCard from './PhotoCard'
 
 const PHOTOS = [
-  { title: 'Aviation', location: 'Pitt Meadows, Canada', year: '2024', image: '/photos/aviation.jpg' },
-  { title: 'Alpine Skiing', location: 'Vancouver, Canada', year: '2025', image: '/photos/snow-hiking.jpg' },
-  { title: 'Night Walks', location: 'Markham, Canada', year: '2026', image: '/photos/night-bridge.jpg' },
-  { title: 'Munich', location: 'Munich, Germany', year: '2024', image: '/photos/munich.jpg' },
-  { title: 'Exploring', location: 'Victoria, Canada', year: '2018', image: '/photos/wooden-bridge.jpg' },
-  { title: 'Travel', location: 'Český Krumlov, Czech Republic', year: '2024', image: '/photos/town-arch.jpg' },
-  { title: 'Classical Piano', location: 'Home', year: '2024', image: '' },
-  { title: 'Cycling', location: 'The Alps', year: '2023', image: '' },
+  { title: 'Aviation', location: 'Pitt Meadows, Canada', year: '2024', image: '/photobar/aviation.jpg' },
+  { title: 'Alpine Skiing', location: 'Vancouver, Canada', year: '2025', image: '/photobar/snow-hiking.jpg' },
+  { title: 'Night Walks', location: 'Markham, Canada', year: '2026', image: '/photobar/night-bridge.jpg' },
+  { title: 'Munich', location: 'Munich, Germany', year: '2024', image: '/photobar/munich.jpg' },
+  { title: 'Exploring', location: 'Victoria, Canada', year: '2018', image: '/photobar/wooden-bridge.jpg' },
+  { title: 'Travel', location: 'Český Krumlov, Czech Republic', year: '2024', image: '/photobar/town-arch.jpg' },
+  { title: 'Stoos', location: 'Stoos, Switzerland', year: '2024', image: '/photobar/stoos.jpeg' },
+  { title: 'Innsbruck', location: 'Innsbruck, Austria', year: '2024', image: '/photobar/innsbruck.jpeg' },
 ]
 
-// Double for seamless loop
-const MARQUEE_PHOTOS = [...PHOTOS, ...PHOTOS]
+// Split into two rows
+const ROW_1 = PHOTOS.filter((_, i) => i % 2 === 0)
+const ROW_2 = PHOTOS.filter((_, i) => i % 2 === 1)
+
+// Double each for seamless loop
+const MARQUEE_ROW_1 = [...ROW_1, ...ROW_1]
+const MARQUEE_ROW_2 = [...ROW_2, ...ROW_2]
 
 export default function PhotoGallery() {
   const [paused, setPaused] = useState(false)
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div
+      className="relative w-full overflow-hidden"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       {/* Edge fade gradients */}
       <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
+      {/* Row 1 — scrolls left */}
       <div
-        className={`flex gap-6 w-max py-4 ${
-          paused ? '[animation-play-state:paused]' : ''
-        } animate-marquee`}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        style={{ animationPlayState: paused ? 'paused' : 'running' }}
+        className="flex gap-4 w-max py-2 animate-marquee"
+        style={{ animationPlayState: paused ? 'paused' : 'running', animationDuration: '90s' }}
       >
-        {MARQUEE_PHOTOS.map((photo, index) => (
+        {MARQUEE_ROW_1.map((photo, index) => (
+          <div key={index} className="flex-shrink-0">
+            <PhotoCard photo={photo} />
+          </div>
+        ))}
+      </div>
+
+      {/* Row 2 */}
+      <div
+        className="flex gap-4 w-max py-2 animate-marquee"
+        style={{ animationPlayState: paused ? 'paused' : 'running', animationDuration: '90s' }}
+      >
+        {MARQUEE_ROW_2.map((photo, index) => (
           <div key={index} className="flex-shrink-0">
             <PhotoCard photo={photo} />
           </div>

@@ -19,7 +19,7 @@ export default function PhotoCard({ photo }) {
 
   return (
     <div
-      className="relative h-[300px] md:h-[400px] w-auto bg-slate-100 rounded-xl overflow-hidden cursor-pointer shadow-sm group transition-all duration-300"
+      className="relative h-[180px] md:h-[220px] w-auto bg-slate-100 rounded-xl overflow-hidden cursor-pointer shadow-sm group transition-all duration-300"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

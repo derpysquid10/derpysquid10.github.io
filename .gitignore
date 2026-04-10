@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+website/dist/
+
+# Environment
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+CLAUDE.md
+
+# Personal documents
+*.pdf
+sample.txt
+package-lock.json

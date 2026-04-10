@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
         indigo: {
           400: '#818cf8',
@@ -18,13 +21,18 @@ export default {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
         'fade-in-up': {
           '0%': { opacity: '0', transform: 'translateY(20px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
-        marquee: 'marquee 60s linear infinite',
+        marquee: 'marquee 120s linear infinite',
+        'marquee-reverse': 'marquee-reverse 120s linear infinite',
         'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
       },
     },

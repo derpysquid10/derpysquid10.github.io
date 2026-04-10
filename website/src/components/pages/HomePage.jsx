@@ -1,13 +1,7 @@
-import { Mail, Github, Linkedin, BookOpen, Camera, ArrowRight } from 'lucide-react'
+import { Mail, Linkedin, BookOpen, Camera, ArrowRight } from 'lucide-react'
 import ExperienceCard from '../ExperienceCard'
 import ProjectRow from '../ProjectRow'
 import PhotoGallery from '../PhotoGallery'
-
-const SKILLS = [
-  'Full Stack Development',
-  '3D Web Graphics (Three.js)',
-  'System Architecture',
-]
 
 export default function HomePage({ navigate }) {
   return (
@@ -22,63 +16,50 @@ export default function HomePage({ navigate }) {
           <h1 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
             Hello, I'm Gordon!
           </h1>
-          <p className="text-slate-600 leading-relaxed text-lg">
-            I'm a passionate developer focusing on bridging the gap between
-            engineering and design. Currently studying at TUM, I have experience
-            working with massive scale systems at Huawei and building interactive
-            3D experiences on the web.
-          </p>
 
           {/* Contact links */}
-          <div className="flex flex-col gap-3 pt-2">
+          <div className="flex flex-wrap gap-5 items-center">
             <a
               href="mailto:gordon.tan111@gmail.com"
-              className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors w-fit"
+              className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
             >
               <Mail size={20} strokeWidth={1.5} />
               <span className="text-base">gordon.tan111@gmail.com</span>
             </a>
-
-            <div className="flex flex-wrap gap-6 items-center">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
-              >
-                <Github size={20} strokeWidth={1.5} />
-                <span className="font-medium">GitHub</span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/gordon-tan04/"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
-              >
-                <Linkedin size={20} strokeWidth={1.5} />
-                <span className="font-medium">LinkedIn</span>
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
-              >
-                <BookOpen size={20} strokeWidth={1.5} />
-                <span className="font-medium">Blog</span>
-              </a>
-            </div>
+            <a
+              href="https://www.linkedin.com/in/gordon-tan04/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+            >
+              <Linkedin size={20} strokeWidth={1.5} />
+              <span className="font-medium">LinkedIn</span>
+            </a>
+            <button
+              onClick={() => navigate('blog')}
+              className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 transition-colors"
+            >
+              <BookOpen size={20} strokeWidth={1.5} />
+              <span className="font-medium">Blog</span>
+            </button>
           </div>
 
-          {/* Skills */}
-          <ul className="space-y-2 text-slate-600 pt-2">
-            {SKILLS.map((skill) => (
-              <li key={skill} className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-indigo-500 flex-shrink-0" />
-                {skill}
-              </li>
-            ))}
-          </ul>
+          <p className="text-slate-600 leading-relaxed text-lg">
+            I am a 4th year Engineering Science student specializing in Machine
+            Intelligence at the University of Toronto. I am currently a
+            research intern at Huawei Noah's Ark Lab on the SpatialAI/Autonomous Driving team where I had the privileged to be mentored by{' '}
+            <a href="https://binbin-xu.github.io/" target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-700 underline">Binbin Xu</a>,
+            focusing on 3D reconstruction. Prior to this,
+            I was a summer research intern at the Technical University of
+            Munich (TUM) under <a href="https://www.dynsyslab.org/prof-angela-schoellig/" target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-700 underline">Prof. Dr. Angela Schoellig</a>, working on semantic
+            autonomous navigation for mobile manipulators.
+          </p>
+          <p className="text-slate-600 leading-relaxed text-lg">
+            Outside of school, I am an avid cyclist with a goal of cycling on
+            every continent in the world (including Antarctica). Currently, I'm 3/7 on the way! I am also a private pilot and enjoy flying around
+            Toronto and Vancouver, my hometown, seeing the beautiful scenic nature and cities from
+            above.
+          </p>
         </div>
 
         {/* Right: profile photo */}
@@ -103,72 +84,56 @@ export default function HomePage({ navigate }) {
           <ExperienceCard
             title="Huawei Noah's Ark Lab"
             role="Assistant Researcher Intern"
-            image="/huawei_logo.png"
-            onClick={() => navigate('huawei')}
+            image="/huawei.png"
           />
           <ExperienceCard
             title="Technical University of Munich"
             role="Undergraduate Researcher"
-            image="/tum_logo.jpg"
-            onClick={() => navigate('tum')}
+            image="/tum_logo.png"
           />
         </div>
       </section>
 
-      {/* ── PROJECTS PREVIEW ──────────────────────────────────────── */}
-      <section
-        id="projects"
-        className="max-w-6xl mx-auto px-6 pb-32 border-t border-slate-100 pt-16"
-      >
-        <div className="flex items-end justify-between mb-20">
-          <h2 className="text-4xl font-bold text-slate-800">Things I've Done</h2>
-          <button
-            onClick={() => navigate('projects')}
-            className="hidden md:inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors group"
-          >
-            View All Projects
-            <ArrowRight
-              size={16}
-              className="group-hover:translate-x-0.5 transition-transform duration-200"
-            />
-          </button>
-        </div>
-
-        <div className="flex flex-col gap-28">
-          <ProjectRow
-            title="VideoRigAnything"
-            description="Rigged 4D mesh reconstruction from video. This project introduces a novel framework for automatically extracting animatable 3D meshes directly from monocular video footage, bridging the gap between static 3D capture and dynamic animation."
-            image=""
-            github="#"
-          />
-          <ProjectRow
-            title="UniScale"
-            description="A unified, scale-aware multi-view 3D reconstruction framework for robotic applications. It uses a single feed-forward network to jointly estimate camera parameters, depth maps, and metric scale while flexibly integrating geometric priors without training from scratch."
-            image=""
-            arxiv="#"
-            reverse
-          />
-          <ProjectRow
-            title="Deep Learning Classifier"
-            description="Custom CNN classifying images with 98% accuracy. Trained on a diverse dataset to identify granular object categories, heavily optimized for edge deployment."
-            image=""
-          />
-        </div>
-
-        {/* Mobile CTA */}
-        <div className="mt-16 flex md:hidden">
-          <button
-            onClick={() => navigate('projects')}
-            className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold text-sm transition-colors group"
-          >
-            View All Projects
-            <ArrowRight
-              size={16}
-              className="group-hover:translate-x-0.5 transition-transform duration-200"
-            />
-          </button>
+      {/* ── GOALS & QUESTS ────────────────────────────────────────── */}
+      <section id="goals" className="max-w-6xl mx-auto px-6 pt-6 pb-16">
+        <h2 className="text-4xl font-bold text-slate-800 mb-8">Goals & Quests</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+          {[
+            { title: 'BASc Engineering Science', current: 4, total: 5, unit: 'years', gradient: 'from-emerald-400 to-teal-500' },
+            { title: 'Continents Cycled', current: 3, total: 7, unit: 'continents', gradient: 'from-amber-400 to-orange-500' },
+            { title: 'Commercial Pilot License', current: 71.4, total: 200, unit: 'hours', gradient: 'from-sky-400 to-indigo-500' },
+            { title: 'Countries Visited', current: 11, total: 196, unit: 'countries', gradient: 'from-rose-400 to-pink-500' },
+            { title: <>Learning Chopin <a href="https://www.youtube.com/watch?v=tSAwZP8e-zQ&list=RDtSAwZP8e-zQ&start_radio=1&pp=ygUaY2hvcGluIG5vY3R1cm5lIG9wIDQ4IG5vIDGgBwE%3D" target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-700 underline">Nocturne</a></>, current: 15, total: 100, unit: '', gradient: 'from-violet-400 to-purple-500' },
+            { title: '???', current: 0, total: 1, unit: '', gradient: 'from-slate-300 to-slate-400' },
+          ].map((goal, i) => (
+            <div key={i} className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-slate-800">{goal.title}</h3>
+                {goal.unit && (
+                  <span className="text-sm font-medium text-slate-500">
+                    {goal.current} {goal.unit}
+                  </span>
+                )}
+              </div>
+              <div className="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden">
+                <div
+                  className={`h-full bg-gradient-to-r ${goal.gradient} rounded-full transition-all duration-500 relative overflow-hidden`}
+                  style={{ width: `${(goal.current / goal.total) * 100}%` }}
+                >
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 8px)',
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
+
+      {/* ── PUBLICATIONS & PROJECTS PREVIEW — commented out for now, restorable from git ── */}
 
       {/* ── PHOTOS ────────────────────────────────────────────────── */}
       <section
@@ -180,6 +145,43 @@ export default function HomePage({ navigate }) {
           Photos
         </h2>
         <PhotoGallery />
+      </section>
+
+      {/* ── MISCELLANEOUS ─────────────────────────────────────────── */}
+      <section id="misc" className="max-w-6xl mx-auto px-6 pb-32 border-t border-slate-100 pt-10">
+        <h2 className="text-3xl font-bold text-slate-900 mb-2">Miscellaneous</h2>
+        <p className="text-slate-600 text-lg mb-4">
+          Aside from cycling and flying, I have a few other interests (that may be excessive).
+        </p>
+        <div className="space-y-1">
+          <div className="flex gap-3">
+            <span className="mt-2 w-2.5 h-2.5 rounded-full bg-indigo-500 flex-shrink-0" />
+            <div>
+              <h3 className="font-bold text-slate-900">Piano</h3>
+              <p className="text-slate-600 leading-relaxed">
+                I've been playing classical piano since I was young. Currently working my way through Chopin's nocturnes — there's something meditative about practicing a piece until it finally clicks.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="mt-2 w-2.5 h-2.5 rounded-full bg-indigo-500 flex-shrink-0" />
+            <div>
+              <h3 className="font-bold text-slate-900">Skiing</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Whether it's the Alps or the Rockies, I love hitting the slopes in winter. There's nothing quite like carving fresh tracks on a cold morning with mountains stretching out in every direction.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="mt-2 w-2.5 h-2.5 rounded-full bg-indigo-500 flex-shrink-0" />
+            <div>
+              <h3 className="font-bold text-slate-900">Hiking</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Long day hikes are my way of resetting. I've trekked through trails across Europe and Canada — the longer and more remote, the better.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   )
