@@ -1,9 +1,32 @@
+import { useState, useEffect } from 'react'
 import { Mail, Linkedin, BookOpen } from 'lucide-react'
 import ExperienceCard from '../ExperienceCard'
 import ProjectRow from '../ProjectRow'
 import PhotoGallery from '../PhotoGallery'
 
+const PRIORITY_IMAGES = ['/about.jpg', '/huawei.png', '/tum_logo.png']
+
 export default function HomePage({ navigate }) {
+  const [priorityLoaded, setPriorityLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    Promise.all(
+      PRIORITY_IMAGES.map(
+        (src) =>
+          new Promise((resolve) => {
+            const img = new Image()
+            img.onload = resolve
+            img.onerror = resolve
+            img.src = src
+          })
+      )
+    ).then(() => {
+      if (!cancelled) setPriorityLoaded(true)
+    })
+    return () => { cancelled = true }
+  }, [])
+
   return (
     <>
       {/* ── ABOUT / HERO ──────────────────────────────────────────── */}
@@ -68,6 +91,8 @@ export default function HomePage({ navigate }) {
             <img
               src="/about.jpg"
               alt="Gordon Tan"
+              fetchPriority="high"
+              loading="eager"
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.currentTarget.style.display = 'none'
@@ -143,7 +168,11 @@ export default function HomePage({ navigate }) {
         <h2 className="text-3xl font-bold text-slate-900 mb-8">
           📸 Photos
         </h2>
-        <PhotoGallery />
+        {priorityLoaded ? <PhotoGallery /> : (
+          <div className="h-[220px] flex items-center justify-center text-slate-400">
+            Loading photos…
+          </div>
+        )}
       </section>
 
       {/* ── MISCELLANEOUS ─────────────────────────────────────────── */}

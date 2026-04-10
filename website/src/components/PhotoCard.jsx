@@ -37,6 +37,7 @@ export default function PhotoCard({ photo }) {
           <img
             src={photo.image}
             alt={photo.title}
+            loading="lazy"
             className="h-full w-auto object-contain bg-slate-100"
           />
         )
