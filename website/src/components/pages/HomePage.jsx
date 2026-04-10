@@ -47,7 +47,7 @@ export default function HomePage({ navigate }) {
           <p className="text-slate-600 leading-relaxed text-lg">
             I am a 4th year Engineering Science student specializing in Machine
             Intelligence at the University of Toronto. I am currently a
-            research intern at Huawei Noah's Ark Lab on the SpatialAI/Autonomous Driving team where I had the privileged to be mentored by{' '}
+            research intern at Huawei Noah's Ark Lab on the SpatialAI/Autonomous Driving team where I had the privilege to be mentored by{' '}
             <a href="https://binbin-xu.github.io/" target="_blank" rel="noreferrer" className="text-indigo-600 hover:text-indigo-700 underline">Dr. Binbin Xu</a>,
             focusing on 3D reconstruction. Prior to this,
             I was a summer research intern at the Technical University of
