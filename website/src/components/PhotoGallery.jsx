@@ -10,6 +10,9 @@ const PHOTOS = [
   { title: 'Travel', location: 'Český Krumlov, Czech Republic', year: '2024', image: '/photobar/town-arch.jpg' },
   { title: 'Stoos', location: 'Stoos, Switzerland', year: '2024', image: '/photobar/stoos.jpeg' },
   { title: 'Innsbruck', location: 'Innsbruck, Austria', year: '2024', image: '/photobar/innsbruck.jpeg' },
+  { title: 'Breitachklamm', location: 'Breitachklamm, Germany', year: '2024', image: '/photobar/breitachklamm.jpeg' },
+  { title: 'Salzburg', location: 'Salzburg, Austria', year: '2024', image: '/photobar/salzburg.jpeg' },
+  { title: 'Vancouver', location: 'Vancouver, Canada', year: '2025', image: '/photobar/vancouver.jpeg' },
 ]
 
 // Split into two rows
