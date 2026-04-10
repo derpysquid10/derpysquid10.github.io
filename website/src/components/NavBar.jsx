@@ -1,15 +1,18 @@
 export default function NavBar({ activePage, navigate }) {
   const scrollToSection = (id) => {
+    const scrollTo = () => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const navHeight = 56
+      const top = el.getBoundingClientRect().top + window.scrollY - navHeight
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
+
     if (activePage !== 'home') {
       navigate('home')
-      // Wait for React to render HomePage before scrolling
-      setTimeout(() => {
-        const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-      }, 80)
+      setTimeout(scrollTo, 80)
     } else {
-      const el = document.getElementById(id)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      scrollTo()
     }
   }
 
@@ -51,6 +54,13 @@ export default function NavBar({ activePage, navigate }) {
             className={isExperiencePage ? activeLink : linkBase}
           >
             Experience
+          </button>
+
+          <button
+            onClick={() => scrollToSection('research')}
+            className={linkBase}
+          >
+            Research
           </button>
 
           {/* Projects tab commented out for now

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Mail, Linkedin, BookOpen } from 'lucide-react'
+import { Mail, Linkedin, BookOpen, ExternalLink } from 'lucide-react'
 import ExperienceCard from '../ExperienceCard'
 import ProjectRow from '../ProjectRow'
 import PhotoGallery from '../PhotoGallery'
@@ -41,7 +41,7 @@ export default function HomePage({ navigate }) {
           </h1>
 
           {/* Contact links */}
-          <div className="flex flex-wrap gap-5 items-center">
+          <div className="flex flex-wrap gap-5 items-center -ml-2">
             <a
               href="mailto:gordon.tan111@gmail.com"
               className="link-highlight flex items-center gap-2 text-slate-600 hover:text-navy-600 transition-colors px-2 py-1"
@@ -103,7 +103,7 @@ export default function HomePage({ navigate }) {
       </section>
 
       {/* ── EXPERIENCE ────────────────────────────────────────────── */}
-      <section id="experience" className="max-w-6xl mx-auto px-6 pt-12 pb-16">
+      <section id="experience" className="max-w-6xl mx-auto px-6 pt-12 pb-16 border-t border-slate-200">
         <h2 className="text-4xl font-bold text-navy-500 mb-8">Experience</h2>
         <div className="flex flex-wrap gap-6 justify-start">
           <ExperienceCard
@@ -119,9 +119,36 @@ export default function HomePage({ navigate }) {
         </div>
       </section>
 
+      {/* ── RESEARCH ─────────────────────────────────────────────── */}
+      <section id="research" className="max-w-6xl mx-auto px-6 pt-12 pb-16 border-t border-slate-200">
+        <h2 className="text-4xl font-bold text-navy-500 mb-8">Research</h2>
+        <div className="space-y-6">
+          <div className="border border-slate-200 rounded-xl p-6 hover:shadow-md transition-shadow">
+            <h3 className="text-xl font-bold text-navy-500 mb-2">
+              UniScale: Unified Scale-Aware 3D Reconstruction for Multi-View Understanding via Prior Injection for Robotic Perception
+            </h3>
+            <p className="text-slate-500 text-sm mb-3">
+              Mohammad Mahdavian*, <span className="font-medium">Gordon Tan*</span>, Binbin Xu, Yuan Ren, Dongfeng Bai, Bingbing Liu
+            </p>
+            <p className="text-slate-600 leading-relaxed mb-4">
+              A unified framework for robotic applications that performs scale-aware multi-view 3D reconstruction using a single feed-forward network that jointly estimates camera parameters, depth maps, and metric scale while flexibly integrating geometric priors.
+            </p>
+            <a
+              href="https://arxiv.org/abs/2602.23224"
+              target="_blank"
+              rel="noreferrer"
+              className="link-highlight inline-flex items-center gap-2 text-navy-600 hover:text-navy-500 font-medium text-sm px-2 py-1"
+            >
+              <ExternalLink size={15} />
+              arXiv 2602.23224
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── GOALS & QUESTS ────────────────────────────────────────── */}
-      <section id="goals" className="max-w-6xl mx-auto px-6 pt-12 pb-16">
-        <h2 className="text-4xl font-bold text-navy-500 mb-8">Goals & Quests</h2>
+      <section id="goals" className="max-w-6xl mx-auto px-6 pt-12 pb-16 border-t border-slate-200">
+        <h2 className="text-4xl font-bold text-navy-500 mb-8">Goals & Progress</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1.5">
           {[
             { title: 'BASc Engineering Science', current: 4, total: 5, unit: 'years', gradient: 'from-emerald-400 to-teal-500' },
@@ -133,7 +160,7 @@ export default function HomePage({ navigate }) {
           ].map((goal, i) => (
             <div key={i} className="space-y-1">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-normal text-slate-900 font-sans">{goal.title}</h3>
+                <h3 className="text-base font-normal text-slate-900 font-sans italic">{goal.title}</h3>
                 {goal.unit && (
                   <span className="text-sm font-medium text-slate-500">
                     {goal.current} {goal.unit}
@@ -163,7 +190,7 @@ export default function HomePage({ navigate }) {
       {/* ── PHOTOS ────────────────────────────────────────────────── */}
       <section
         id="photos"
-        className="max-w-6xl mx-auto px-6 pb-16 border-t border-slate-100 pt-12"
+        className="max-w-6xl mx-auto px-6 pb-16 border-t border-slate-200 pt-12"
       >
         <h2 className="text-4xl font-bold text-navy-500 mb-8">
           Photos
@@ -176,7 +203,7 @@ export default function HomePage({ navigate }) {
       </section>
 
       {/* ── MISCELLANEOUS ─────────────────────────────────────────── */}
-      <section id="misc" className="max-w-6xl mx-auto px-6 pb-16 border-t border-slate-100 pt-12">
+      <section id="misc" className="max-w-6xl mx-auto px-6 pb-16 border-t border-slate-200 pt-12">
         <h2 className="text-4xl font-bold text-navy-500 mb-8">Miscellaneous</h2>
         <p className="text-slate-600 text-lg mb-4">
           Aside from cycling and flying, I have a few other interests (that may be excessive).

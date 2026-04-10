@@ -8,7 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['Cormorant Garamond', 'Playfair Display', 'serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
       },
       colors: {
         navy: {
