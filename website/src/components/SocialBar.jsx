@@ -2,7 +2,7 @@ import { Linkedin, Mail } from 'lucide-react'
 
 export default function SocialBar() {
   return (
-    <div className="fixed top-1/2 right-5 -translate-y-1/2 flex flex-col gap-5 z-50">
+    <div className="hidden md:flex fixed top-1/2 right-5 -translate-y-1/2 flex-col gap-5 z-50">
       <a
         href="https://www.linkedin.com/in/gordon-tan04/"
         target="_blank"

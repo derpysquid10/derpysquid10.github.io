@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import NavBar from './components/NavBar'
-import SocialBar from './components/SocialBar'
 import HomePage from './components/pages/HomePage'
 import ExperienceDetail from './components/pages/ExperienceDetail'
 import ProjectsPage from './components/pages/ProjectsPage'
@@ -55,7 +54,6 @@ export default function App() {
     <div className="font-sans text-slate-900 bg-white min-h-screen">
       <NavBar activePage={activePage} navigate={navigate} />
 
-      {activePage === 'home' && <SocialBar />}
 
       <main>
         {activePage === 'home' && <HomePage navigate={navigate} />}
