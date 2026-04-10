@@ -70,7 +70,7 @@ export default function App() {
 
         {activePage === 'projects' && <ProjectsPage navigate={navigate} />}
 
-        {activePage === 'blog' && <BlogPage />}
+        {activePage === 'blog' && <BlogPage navigate={navigate} />}
       </main>
     </div>
   )

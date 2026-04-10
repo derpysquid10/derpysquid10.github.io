@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PhotoCard from './PhotoCard'
 
 const PHOTOS = [
-  { title: 'Aviation', location: 'Pitt Meadows, Canada', year: '2024', image: '/photobar/aviation.jpg' },
+  { title: 'Aviation', location: 'Pitt Meadows, Canada', year: '2022', image: '/photobar/aviation.jpg' },
   { title: 'Alpine Skiing', location: 'Vancouver, Canada', year: '2025', image: '/photobar/snow-hiking.jpg' },
   { title: 'Night Walks', location: 'Markham, Canada', year: '2026', image: '/photobar/night-bridge.jpg' },
   { title: 'Munich', location: 'Munich, Germany', year: '2024', image: '/photobar/munich.jpg' },
@@ -22,40 +22,70 @@ const MARQUEE_ROW_2 = [...ROW_2, ...ROW_2]
 
 export default function PhotoGallery() {
   const [paused, setPaused] = useState(false)
+  const [selected, setSelected] = useState(null)
+
+  useEffect(() => {
+    if (!selected) return
+    const handleKey = (e) => {
+      if (e.key === 'Escape') setSelected(null)
+    }
+    document.addEventListener('keydown', handleKey)
+    return () => document.removeEventListener('keydown', handleKey)
+  }, [selected])
 
   return (
-    <div
-      className="relative w-full overflow-hidden"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      {/* Edge fade gradients */}
-      <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-      {/* Row 1 — scrolls left */}
+    <>
       <div
-        className="flex gap-4 w-max py-2 animate-marquee"
-        style={{ animationPlayState: paused ? 'paused' : 'running', animationDuration: '90s' }}
+        className="relative w-full overflow-hidden"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
       >
-        {MARQUEE_ROW_1.map((photo, index) => (
-          <div key={index} className="flex-shrink-0">
-            <PhotoCard photo={photo} />
-          </div>
-        ))}
+        {/* Edge fade gradients */}
+        <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+        {/* Row 1 */}
+        <div
+          className="flex gap-4 w-max py-2 animate-marquee"
+          style={{ animationPlayState: paused ? 'paused' : 'running', animationDuration: '90s' }}
+        >
+          {MARQUEE_ROW_1.map((photo, index) => (
+            <div key={index} className="flex-shrink-0" onClick={() => photo.image && setSelected(photo)}>
+              <PhotoCard photo={photo} />
+            </div>
+          ))}
+        </div>
+
+        {/* Row 2 */}
+        <div
+          className="flex gap-4 w-max py-2 animate-marquee"
+          style={{ animationPlayState: paused ? 'paused' : 'running', animationDuration: '90s' }}
+        >
+          {MARQUEE_ROW_2.map((photo, index) => (
+            <div key={index} className="flex-shrink-0" onClick={() => photo.image && setSelected(photo)}>
+              <PhotoCard photo={photo} />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Row 2 */}
-      <div
-        className="flex gap-4 w-max py-2 animate-marquee"
-        style={{ animationPlayState: paused ? 'paused' : 'running', animationDuration: '90s' }}
-      >
-        {MARQUEE_ROW_2.map((photo, index) => (
-          <div key={index} className="flex-shrink-0">
-            <PhotoCard photo={photo} />
+      {/* Lightbox */}
+      {selected && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-6 cursor-pointer"
+          onClick={() => setSelected(null)}
+        >
+          <img
+            src={selected.image}
+            alt={selected.title}
+            className="max-w-full max-h-full object-contain rounded-lg"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/80 text-sm text-center">
+            {selected.location}{selected.year ? `, ${selected.year}` : ''}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   )
 }
